@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import os
 import requests
 from dotenv import load_dotenv
@@ -27,7 +26,6 @@ index_definition = {
 
 response = requests.put(url, headers=headers, json=index_definition)
 print("✅ AI Search configurado:", response.json())
-=======
 import os
 import requests
 from dotenv import load_dotenv
@@ -56,4 +54,3 @@ index_definition = {
 
 response = requests.put(url, headers=headers, json=index_definition)
 print("✅ AI Search configurado:", response.json())
->>>>>>> 50a6ce4ff93ae97f1d760f2a7d8a12f964322346

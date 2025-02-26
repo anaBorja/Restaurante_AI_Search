@@ -1,15 +1,6 @@
-<<<<<<< HEAD
 azure-ai-formrecognizer
 azure-core
 azure-storage-blob
 azure-search-documents
 pymongo
 python-dotenv
-=======
-azure-ai-formrecognizer
-azure-core
-azure-storage-blob
-azure-search-documents
-pymongo
-python-dotenv
->>>>>>> 50a6ce4ff93ae97f1d760f2a7d8a12f964322346
