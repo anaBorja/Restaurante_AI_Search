@@ -15,6 +15,7 @@ BLOB_CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 form_recognizer_client = DocumentAnalysisClient(FORM_RECOGNIZER_ENDPOINT, AzureKeyCredential(FORM_RECOGNIZER_KEY))
 blob_service_client = BlobServiceClient.from_connection_string(BLOB_CONNECTION_STRING)
 container_name = "menus"
+output_container = "menusextraido"
 
 def obtener_blob_url(blob_name):
     try:
@@ -25,6 +26,7 @@ def obtener_blob_url(blob_name):
         return blob_url
     except Exception as e:
         print(f"Error al obtener la URL del blob: {e}")
+
         return None
 
 def procesar_pdf(blob_url):
@@ -86,22 +88,40 @@ def procesar_pdf(blob_url):
             # Bebida y precio (si están presentes en el documento)
             json_result["bebida"] = document.fields.get("bebida").value if document.fields.get("bebida") else "N/A"
             json_result["precio"] = document.fields.get("precio").value if document.fields.get("precio") else "N/A"
-            print(json_result)
+            
         return json_result
     except Exception as e:
         print(f"Ocurrió un error al procesar el archivo: {e}")
         return {}
 
-# Nombre del archivo en tu contenedor
-nombre_blob = "El Buen Sabor 1.pdf"
 
-# Generar la URL del blob
+def subir_json_a_blob(json_data, nombre_archivo):
+    """Guarda el JSON extraído en Blob Storage en el contenedor 'menus_extraidos'."""
+    try:
+        blob_client = blob_service_client.get_blob_client(container=output_container, blob=nombre_archivo)
+
+        # Convertir JSON a string
+        json_string = json.dumps(json_data, indent=4)
+
+        # Subir JSON al blob
+        blob_client.upload_blob(json_string, overwrite=True)
+        print(f"✅ JSON guardado en Azure Blob Storage: {nombre_archivo}")
+    except Exception as e:
+        print(f"❌ Error al subir JSON a Blob Storage: {e}")
+
+
+# 📌 Ejecución
+nombre_blob = "El Buen Sabor 1.pdf"
 blob_url = obtener_blob_url(nombre_blob)
 
-# Verifica si la URL se genera correctamente antes de pasarla
 if blob_url:
-    # Procesar el PDF con la URL del blob
     resultado = procesar_pdf(blob_url)
-    print(json.dumps(resultado, indent=4))
+    if resultado:
+        # Crear nombre del archivo JSON con el nombre del restaurante
+        nombre_restaurante = resultado["restaurante"].replace(" ", "_").lower()
+        nombre_json = f"{nombre_restaurante}.json"
+
+        # Subir JSON a Blob Storage
+        subir_json_a_blob(resultado, nombre_json)
 else:
-    print("No se pudo obtener la URL del blob.")
+    print("❌ No se pudo obtener la URL del blob.")
