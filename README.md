@@ -63,7 +63,6 @@ cd repositorio
  ```bash
  pip install -r requirements.txt
 ```
-
 ## 🚀 Ejecutar Ambas Aplicaciones de Streamlit
 
 Para ejecutar ambas interfaces de Streamlit (la del restaurante y la del cliente), sigue estos pasos:
@@ -75,4 +74,16 @@ Para ejecutar ambas interfaces de Streamlit (la del restaurante y la del cliente
 2. ejecutar la paete del cliente.
    ```bash
    streamlit run web_comilon.py
+
+# ⚠️ **ADVERTENCIA**: Antes de ejecutar la aplicación, asegúrate de rellenar las siguientes variables
+## con tus credenciales de Azure correspondientes. 
+### Estas son necesarias para que las aplicaciones puedan acceder a los recursos de Azure.
+```bash
+AZURE_FORM_RECOGNIZER_ENDPOINT=<YOUR AZURE_FORM_RECOGNIZER_ENDPOINT>
+AZURE_FORM_RECOGNIZER_KEY=<YOUR AZURE_FORM_RECOGNIZER_KEY>
+MODEL_ID=<YOUR MODEL_ID>
+AZURE_STORAGE_CONNECTION_STRING=<YOUR AZURE_STORAGE_CONNECTION_STRING>
+COSMOSDB_CONNECTION_STRING=<YOUR COSMOSDB_CONNECTION_STRING>
+AZURE_SEARCH_ENDPOINT=<YOUR AZURE_SEARCH_ENDPOINT>
+AZURE_SEARCH_API_KEY=<YOUR AZURE_SEARCH_API_KEY>
 
