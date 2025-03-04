@@ -1,47 +1,24 @@
 import streamlit as st
-import requests
-import os
-from dotenv import load_dotenv
+from search_menu import search_menu, format_results
 
-# Cargar credenciales desde .env
-load_dotenv()
-search_endpoint = os.getenv("AZURE_SEARCH_ENDPOINT")
-api_key = os.getenv("AZURE_SEARCH_API_KEY")
-index_name = "cosmosdb3-index"
+# Título de la aplicación
+st.title("Búsqueda de Menús en Restaurantes")
 
-# Encabezados para la solicitud
-headers = {
-    "Content-Type": "application/json",
-    "api-key": api_key
-}
+# Campo de búsqueda
+query = st.text_input("Busca por plato, ingrediente o restaurante:", "*")
 
-# Interfaz en Streamlit
-st.title("Buscador de Menús de Restaurantes 🍽️")
-search_query = st.text_input("¿Qué plato estás buscando?", "")
-
+# Botón para realizar la búsqueda
 if st.button("Buscar"):
-    if search_query:
-        search_url = f"{search_endpoint}/indexes/{index_name}/docs/search?api-version=2021-04-30-Preview"
-        search_payload = {
-            "search": search_query,
-            "select": "restaurante, direccion, plato, bebida, precio",
-            "top": 5
-        }
-        response = requests.post(search_url, json=search_payload, headers=headers)
+    # Realizar la búsqueda
+    results = search_menu(query)
 
-        if response.status_code == 200:
-            results = response.json()
-            if results["value"]:
-                for doc in results["value"]:
-                    st.subheader(f"🍴 {doc['restaurante']}")
-                    st.write(f"📍 Dirección: {doc['direccion']}")
-                    st.write(f"🥘 Plato: {doc.get('plato', 'N/A')}")
-                    st.write(f"🍹 Bebida: {doc.get('bebida', 'N/A')}")
-                    st.write(f"💰 Precio: {doc['precio']} €")
-                    st.markdown("---")
-            else:
-                st.warning("No se encontraron resultados.")
-        else:
-            st.error(f"Error en la búsqueda: {response.status_code}, {response.text}")
+    # Formatear los resultados
+    if results:
+        formatted_results = format_results(results)
+
+        # Mostrar los resultados en la aplicación
+        st.subheader("Resultados encontrados:")
+        for result in formatted_results:
+            st.text(result)
     else:
-        st.warning("Por favor, ingresa un término de búsqueda.")
+        st.write("No se encontraron resultados.")

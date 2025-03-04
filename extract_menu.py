@@ -5,7 +5,7 @@ from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient
 
-# Cargar variables de entorno
+# Cargar variables de entorno 2
 load_dotenv()
 FORM_RECOGNIZER_ENDPOINT = os.getenv("AZURE_FORM_RECOGNIZER_ENDPOINT")
 FORM_RECOGNIZER_KEY = os.getenv("AZURE_FORM_RECOGNIZER_KEY")
@@ -88,7 +88,7 @@ def procesar_pdf(blob_url):
             # Bebida y precio (si están presentes en el documento)
             json_result["bebida"] = document.fields.get("bebida").value if document.fields.get("bebida") else "N/A"
             json_result["precio"] = document.fields.get("precio").value if document.fields.get("precio") else "N/A"
-            
+            print(json_result)
         return json_result
     except Exception as e:
         print(f"Ocurrió un error al procesar el archivo: {e}")
@@ -111,7 +111,7 @@ def subir_json_a_blob(json_data, nombre_archivo):
 
 
 # 📌 Ejecución
-nombre_blob = "El Buen Sabor 1.pdf"
+nombre_blob = "El Buen Sabor 2.pdf"
 blob_url = obtener_blob_url(nombre_blob)
 
 if blob_url:

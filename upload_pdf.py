@@ -2,7 +2,7 @@ import os
 from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
 
-# Cargar credenciales
+# Cargar credenciales 1
 load_dotenv()
 AZURE_STORAGE_CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 CONTAINER_NAME = "menus"
@@ -17,4 +17,4 @@ def upload_pdf(file_path):
     print(f"✅ {file_path} subido correctamente.")
 
 # Prueba
-upload_pdf("El Buen Sabor 1.pdf")
+upload_pdf("El Buen Sabor 2.pdf")
