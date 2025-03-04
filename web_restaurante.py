@@ -1,10 +1,14 @@
 import streamlit as st
-from upload_pdf import * # Importamos la función de upload_pdf
-from extract_menu import * # Importamos las funciones de extraction_menu
+from upload_pdf import *  # Importamos la función de upload_pdf
+from extract_menu import *  # Importamos las funciones de extraction_menu
 from store_in_cosmosdb import *  # Importamos las funciones de store_cosmodb
 
 # Interfaz de usuario de Streamlit
 st.title("Sistema de Gestión de Menús de Restaurantes")
+
+# Mostrar una imagen de ejemplo para el formato del PDF
+st.subheader("Ejemplo de cómo debe ser el PDF de menú")
+st.image("restaurante.jpg", caption="Ejemplo de un menú de restaurante", use_container_width=True)
 
 # Subir archivo PDF
 uploaded_file = st.file_uploader("Sube un archivo PDF de menú", type="pdf")
@@ -30,7 +34,7 @@ if uploaded_file is not None:
             st.write("Información extraída del menú:")
             st.json(resultado)
             
-            # Subir el JSON a Azure Blob Storage
+            # Subir el JSON extraído a Azure Blob Storage
             st.write("Subiendo JSON extraído a Azure Blob Storage...")
             nombre_json = f"{resultado['restaurante'].replace(' ', '_').lower()}.json"
             subir_json_a_blob(resultado, nombre_json)

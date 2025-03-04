@@ -16,5 +16,3 @@ def upload_pdf(file_path):
 
     print(f"✅ {file_path} subido correctamente.")
 
-# Prueba
-upload_pdf("El Buen Sabor 2.pdf")
