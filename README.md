@@ -77,7 +77,7 @@ Para ejecutar ambas interfaces de Streamlit (la del restaurante y la del cliente
 
 # ⚠️ **ADVERTENCIA**: Antes de ejecutar la aplicación, asegúrate de rellenar las siguientes variables
 ## con tus credenciales de Azure correspondientes. 
-### Estas son necesarias para que las aplicaciones puedan acceder a los recursos de Azure.
+### Estas son necesarias para que las aplicaciones puedan acceder a los recursos de Azure, que es el archivo .env
 ```bash
 AZURE_FORM_RECOGNIZER_ENDPOINT=<YOUR AZURE_FORM_RECOGNIZER_ENDPOINT>
 AZURE_FORM_RECOGNIZER_KEY=<YOUR AZURE_FORM_RECOGNIZER_KEY>
